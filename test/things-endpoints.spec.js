@@ -58,20 +58,20 @@ describe.only('Things Endpoints', function() {
        return supertest(app)
          .get(`/api/articles/1`)
          .set('Authorization', helpers.makeAuthHeader(invalidUser))
-         .expect(401, { error: `Unauthorized request1` })
+         .expect(401, { error: `Unauthorized request` })
      })
      it(`responds 401 'Unauthorized request' when invalid password`, () => {
         const userInvalidPass = { user_name: testUsers[0].user_name, password: 'wrong' }
         return supertest(app)
           .get(`/api/articles/1`)
           .set('Authorization', makeAuthHeader(userInvalidPass))
-          .expect(401, { error: `Unauthorized reques2t` })
+          .expect(401, { error: `Unauthorized request` })
       })
       it(`responds 401 'Unauthorized request' when invalid sub in payload`, () => {
         const invalidUser = { user_name: 'user-not-existy', id: 1 }
         return endpoint.method(endpoint.path)
           .set('Authorization', helpers.makeAuthHeader(userInvalidCreds))
-          .expect(401, { error: `Unauthorized request3` })
+          .expect(401, { error: `Unauthorized request` })
       })
   })
 
