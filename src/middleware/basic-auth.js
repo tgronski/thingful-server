@@ -18,15 +18,14 @@ function requireAuth(req, res, next) {
       if (!tokenUserName || !tokenPassword) {
         return res.status(401).json({ error: 'Unauthorized request' })
       }
-      req.app.get('db')('blogful_users')
+      req.app.get('db')('thingful_users')
         .where({ user_name: tokenUserName })
         .first()
         .then(user => {
           if (!user) {
             return res.status(401).json({ error: 'Unauthorized request' })
           }
-          return bcrypt.compare(tokenPassword, user.password)
-            .then(passwordsMatch => {
+          return AuthService.comparePasswords(tokenPassword, user.password)            .then(passwordsMatch => {
               if (!passwordsMatch) {
                 return res.status(401).json({ error: 'Unauthorized request' })
               }
